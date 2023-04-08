@@ -10,11 +10,11 @@ function add_owner(string memory _name, string memory _breed, uint _age, string 
   require(petId >= 0 && petId <= 15);
   require(!have_owner[petId]);
   
-  buyers[petId] = msg.sender;
+  owner[petId] = msg.sender;
 
   return petId;
 }
 function getowner() public view returns (address[16] memory) {
-  return buyers;
+  return owner;
 }
 }
