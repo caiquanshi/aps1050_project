@@ -22,7 +22,19 @@
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
           <h1 class="text-center">Pete's Pet Shop</h1>
-          <hr/>
+            <div class="row">
+              <p id="accountBalance" class="text-center"></p>
+              <p id="accountAddress" class="text-center"></p>
+            <hr />
+              <form onSubmit="DonationApp.sendDonation(); return false;" style="text-align: center;">
+                Please enter the amount you want to donate:
+                <input class="text-center" type="text" id="donateAmount"> ETH
+                <br/>
+                <br/>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              </div>
+            <hr />
           <br/>
         </div>
       </div>
@@ -56,6 +68,8 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
+    <script src="js/donation.js"></script>
     <script src="js/app.js"></script>
+
   </body>
 </html>
