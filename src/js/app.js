@@ -15,7 +15,7 @@ App = {
         petTemplate.find('.pet-age').text(data[i].age);
         petTemplate.find('.pet-location').text(data[i].location);
         petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
+        petTemplate.find('.btn-owner').attr('data-id', data[i].id);
         petsRow.append(petTemplate.html());
       }
     });
@@ -61,14 +61,61 @@ web3 = new Web3(App.web3Provider);
       // Use our contract to retrieve and mark the adopted pets
       return App.markAdopted();
     });
+    $.getJSON('UserPetServed.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var UserPetServedArtifact = data;
+      App.contracts.UserPetServed = TruffleContract(UserPetServedArtifact);
+    
+      // Set the provider for our contract
+      App.contracts.UserPetServed.setProvider(App.web3Provider);
+    
+      // Use our contract to retrieve and mark the adopted pets
+      return App.updateUserServed();
+    });
+    $.getJSON('UserTrack.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var UserTrackArtifact = data;
+      App.contracts.UserTrack = TruffleContract(UserTrackArtifact);
+    
+      // Set the provider for our contract
+      App.contracts.UserTrack.setProvider(App.web3Provider);
+    
+    });
 
     return App.bindEvents();
   },
 
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $(document).on('click', '.btn-owner', App.handleOwner);
   },
 
+  handleOwner: function(event) {
+    event.preventDefault();
+
+    var petId = parseInt($(event.target).data('id'));
+     console.log(petId)
+    var adoptionInstance;
+
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+    
+      var account = accounts[0];
+    
+      App.contracts.Adoption.deployed().then(function(instance) {
+        adoptionInstance = instance;
+    
+        // Execute adopt as a transaction by sending account
+        return adoptionInstance.adopters.call(petId);
+      }).then(function(result) {
+        alert("owner is "+ result);
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
+  },
   markAdopted: function(adopters, account) {
     var adoptionInstance;
 
@@ -79,9 +126,38 @@ web3 = new Web3(App.web3Provider);
     }).then(function(adopters) {
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
+          $('.panel-pet').eq(i).find('.btn-adopt').text('Success').attr('disabled', true);
+          $('.panel-pet').eq(i).find('.btn-owner').attr('disabled', false);
         }
       }
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  },
+
+  updateUserServed: function(adopters, account) {
+    var adoptionInstance;
+
+    App.contracts.UserPetServed.deployed().then(function(instance) {
+      userPetServedInstance = instance;
+    
+      return userPetServedInstance.petServed.call();
+    }).then(function(petServed) {
+      console.log(petServed)
+      $('#pet-served').text(petServed)
+      
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+     App.contracts.UserPetServed.deployed().then(function(instance) {
+      userPetServedInstance = instance;
+    
+      return userPetServedInstance.userServed.call();
+    }).then(function(userServed) {
+      console.log(userServed)
+      $('#user-served').text(userServed)
+      
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -100,7 +176,22 @@ web3 = new Web3(App.web3Provider);
       }
     
       var account = accounts[0];
+      App.contracts.UserPetServed.deployed().then(function(instance) {
+        userPetServedInstance = instance;
     
+        // Execute adopt as a transaction by sending account
+        userPetServedInstance.adopt(petId, {from: account});
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+      App.contracts.UserTrack.deployed().then(function(instance) {
+        userTrackInstance = instance;
+    
+        // Execute adopt as a transaction by sending account
+        userTrackInstance.adopt(petId, {from: account});
+      }).catch(function(err) {
+        console.log(err.message);
+      });
       App.contracts.Adoption.deployed().then(function(instance) {
         adoptionInstance = instance;
     
@@ -108,6 +199,8 @@ web3 = new Web3(App.web3Provider);
         return adoptionInstance.adopt(petId, {from: account});
       }).then(function(result) {
         return App.markAdopted();
+      }).then(function(result) {
+        return App.updateUserServed();
       }).catch(function(err) {
         console.log(err.message);
       });

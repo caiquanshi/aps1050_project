@@ -26,7 +26,23 @@
           <br/>
         </div>
       </div>
-
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-3">
+          <strong>User Serverd</strong>: <span id="user-served">0</span><br/>
+          <strong>Pet Adopted</strong>: <span id="pet-served">0</span><br/>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-3">
+          <button  type="button"  onclick="location.href = './userTrack.html';">my pets</button>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+      
       <div id="petsRow" class="row">
         <!-- PETS LOAD HERE -->
       </div>
@@ -45,6 +61,7 @@
             <strong>Age</strong>: <span class="pet-age">3</span><br/>
             <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
             <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+            <button class="btn btn-default btn-owner" type="button" data-id="0" disabled>owner</button>
           </div>
         </div>
       </div>
