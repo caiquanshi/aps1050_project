@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Pete's Pet Shop</title>
+    <title>My Pets</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -21,40 +21,12 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Pete's Pet Shop</h1>
-            <div class="row">
-              <p id="accountBalance" class="text-center"></p>
-              <p id="accountAddress" class="text-center"></p>
-            <hr />
-              <form onSubmit="DonationApp.sendDonation(); return false;" style="text-align: center;">
-                Please enter the amount you want to donate:
-                <input class="text-center" type="text" id="donateAmount"> ETH
-                <br/>
-                <br/>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-              </div>
-            <hr />
-          <br/>
-        </div>
-      </div>
-      <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-3">
-          <strong>User Serverd</strong>: <span id="user-served">0</span><br/>
-          <strong>Pet Adopted</strong>: <span id="pet-served">0</span><br/>
+          <h1 class="text-center">My Pets</h1>
           <hr/>
           <br/>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-3">
-          <button  type="button"  onclick="location.href = './userTrack.html';">my pets</button>
-          <hr/>
-          <br/>
-        </div>
-      </div>
-      
+
       <div id="petsRow" class="row">
         <!-- PETS LOAD HERE -->
       </div>
@@ -72,8 +44,6 @@
             <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
             <strong>Age</strong>: <span class="pet-age">3</span><br/>
             <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
-            <button class="btn btn-default btn-owner" type="button" data-id="0" disabled>owner</button>
           </div>
         </div>
       </div>
@@ -85,8 +55,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="js/donation.js"></script>
-    <script src="js/app.js"></script>
-
+    <script src="js/userTrack.js"></script>
   </body>
 </html>
