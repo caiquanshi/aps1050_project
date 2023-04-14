@@ -1,0 +1,27 @@
+[
+  {
+    "id": 0,
+    "name": "Nutrition Chicken",
+    "picture": "images/food.jpeg",
+    "type": "Dog food"
+  },
+  {
+    "id": 1,
+    "name": "Water bowl",
+    "picture": "images/bowl.jpeg",
+    "type": "Bowl"
+  },
+  {
+    "id": 2,
+    "name": "Suishy",
+    "picture": "images/toy.jpeg",
+    "type": "Dog toy"
+  },
+  {
+    "id": 3,
+    "name": "Yummy Yummy",
+    "picture": "images/treats.jpeg",
+    "type": "Dog Treats"
+  }
+  
+]
