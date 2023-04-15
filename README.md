@@ -54,6 +54,7 @@ Front end framework: JQuery
     ```
 6. run test.
     ```javascript
+    npm install chai-almost
     truffle test
     ``` 
 
