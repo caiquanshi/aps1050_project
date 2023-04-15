@@ -5,16 +5,16 @@ App = {
   init: async function() {
     // Load pets.
     $.getJSON('../items.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+      var itemsRow = $('#itemsRow');
+      var itemTemplate = $('#itemTemplate');
 
       for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-type').text(data[i].type);
+        itemTemplate.find('.panel-title').text(data[i].name);
+        itemTemplate.find('img').attr('src', data[i].picture);
+        itemTemplate.find('.item-type').text(data[i].type);
 
 
-        petsRow.append(petTemplate.html());
+        itemsRow.append(itemTemplate.html());
       }
     });
 
@@ -48,36 +48,36 @@ web3 = new Web3(App.web3Provider);
   },
 
   initContract: function() {
-    $.getJSON('Adoption.json', function(data) {
+    $.getJSON('Market.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var AdoptionArtifact = data;
-      App.contracts.Adoption = TruffleContract(AdoptionArtifact);
+      var MarketArtifact = data;
+      App.contracts.Market = TruffleContract(MarketArtifact);
     
       // Set the provider for our contract
-      App.contracts.Adoption.setProvider(App.web3Provider);
+      App.contracts.Market.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
-      return App.markAdopted();
+      return App.markBought();
     });
 
     return App.bindEvents();
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $(document).on('click', '.btn-buy', App.handleBuy);
   },
 
-  markAdopted: function(adopters, account) {
-    var adoptionInstance;
+  markBought: function(buyers, account) {
+    var MarketInstance;
 
-    App.contracts.Adoption.deployed().then(function(instance) {
-      adoptionInstance = instance;
+    App.contracts.Market.deployed().then(function(instance) {
+      MarketInstance = instance;
     
-      return adoptionInstance.getAdopters.call();
-    }).then(function(adopters) {
-      for (i = 0; i < adopters.length; i++) {
-        if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
+      return MarketInstance.getBuyers.call();
+    }).then(function(buyers) {
+      for (i = 0; i < buyers.length; i++) {
+        if (buyers[i] !== '0x0000000000000000000000000000000000000000') {
+          $('.panel-item').eq(i).find('button').text('Success').attr('disabled', true);
         }
       }
     }).catch(function(err) {
@@ -85,12 +85,12 @@ web3 = new Web3(App.web3Provider);
     });
   },
 
-  handleAdopt: function(event) {
+  handleBuy: function(event) {
     event.preventDefault();
 
-    var petId = parseInt($(event.target).data('id'));
+    var itemId = parseInt($(event.target).data('id'));
 
-    var adoptionInstance;
+    var MarketInstance;
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -99,13 +99,13 @@ web3 = new Web3(App.web3Provider);
     
       var account = accounts[0];
     
-      App.contracts.Adoption.deployed().then(function(instance) {
-        adoptionInstance = instance;
+      App.contracts.Market.deployed().then(function(instance) {
+        MarketInstance = instance;
     
         // Execute adopt as a transaction by sending account
-        return adoptionInstance.adopt(petId, {from: account});
+        return MarketInstance.buy(itemId, {from: account});
       }).then(function(result) {
-        return App.markAdopted();
+        return App.markBought();
       }).catch(function(err) {
         console.log(err.message);
       });
