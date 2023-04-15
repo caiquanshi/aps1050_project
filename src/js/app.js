@@ -3,6 +3,14 @@ App = {
   contracts: {},
 
   init: async function() {
+    // Business Hours Restriction
+    event.preventDefault();
+    var now = new Date();
+    var hour = now.getHours();
+    if (hour < 8 || hour > 23) {
+      alert("Petshop is not available after business hours (8:00 - 17:00)");
+      return;
+    }
     // Load pets.
     $.getJSON('../pets.json', function(data) {
       var petsRow = $('#petsRow');
