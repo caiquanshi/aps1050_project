@@ -57,7 +57,6 @@ web3 = new Web3(App.web3Provider);
       App.contracts.Market.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
-      return App.markBought();
     });
 
     return App.bindEvents();
@@ -65,24 +64,6 @@ web3 = new Web3(App.web3Provider);
 
   bindEvents: function() {
     $(document).on('click', '.btn-buy', App.handleBuy);
-  },
-
-  markBought: function(buyers, account) {
-    var MarketInstance;
-
-    App.contracts.Market.deployed().then(function(instance) {
-      MarketInstance = instance;
-    
-      return MarketInstance.getBuyers.call();
-    }).then(function(buyers) {
-      for (i = 0; i < buyers.length; i++) {
-        if (buyers[i] !== '0x0000000000000000000000000000000000000000') {
-          $('.panel-item').eq(i).find('button').text('Success').attr('disabled', true);
-        }
-      }
-    }).catch(function(err) {
-      console.log(err.message);
-    });
   },
 
   handleBuy: function(event) {
@@ -103,9 +84,7 @@ web3 = new Web3(App.web3Provider);
         MarketInstance = instance;
     
         // Execute adopt as a transaction by sending account
-        return MarketInstance.buy(itemId, {from: account});
-      }).then(function(result) {
-        return App.markBought();
+        return MarketInstance.order(itemId, {from: account});
       }).catch(function(err) {
         console.log(err.message);
       });

@@ -15,8 +15,8 @@ contract TestMarket {
     address expectedBuyer = address(this);
 
     // Testing the buy() function
-    function testUserCanBuyItem() public {
-        uint returnedId = market.buy(expectedItemId);
+    function testUserCanOrderItem() public {
+        uint returnedId = market.order(expectedItemId);
 
         Assert.equal(returnedId, expectedItemId, "Buying the expected item should match what is returned.");
     }
