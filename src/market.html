@@ -15,48 +15,21 @@
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->      <a class="btn btn-default align-items-center mb-4 mb-sm-0 me-2 px-8 py-3 btn-outline-light text-dark shadow" href="./market.html">
-        <span>Market</span>
+    <![endif]-->
+                  <a class="btn btn-default align-items-center mb-4 mb-sm-0 me-2 px-8 py-3 btn-outline-light text-dark shadow" href="./index.html">
+        <span>Main Page</span>
       </a>
   </head>
   <body>
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Pete's Pet Shop</h1>
-            <div class="row">
-              <p id="accountBalance" class="text-center"></p>
-              <p id="accountAddress" class="text-center"></p>
-            <hr />
-              <form onSubmit="DonationApp.sendDonation(); return false;" style="text-align: center;">
-                Please enter the amount you want to donate:
-                <input class="text-center" type="text" id="donateAmount"> ETH
-                <br/>
-                <br/>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-              </div>
-            <hr />
-          <br/>
-        </div>
-      </div>
-      <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-3">
-          <strong>User Serverd</strong>: <span id="user-served">0</span><br/>
-          <strong>Pet Adopted</strong>: <span id="pet-served">0</span><br/>
+          <h1 class="text-center">Pete's Market Shop</h1>
           <hr/>
           <br/>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12 col-sm-8 col-sm-push-3">
-          <button  type="button"  onclick="location.href = './userTrack.html';">my pets</button>
-          <hr/>
-          <br/>
-        </div>
-      </div>
-      
+
       <div id="petsRow" class="row">
         <!-- PETS LOAD HERE -->
       </div>
@@ -71,11 +44,8 @@
           <div class="panel-body">
             <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
             <br/><br/>
-            <strong>Breed</strong>: <span class="pet-breed">Golden Retriever</span><br/>
-            <strong>Age</strong>: <span class="pet-age">3</span><br/>
-            <strong>Location</strong>: <span class="pet-location">Warren, MI</span><br/><br/>
-            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
-            <button class="btn btn-default btn-owner" type="button" data-id="0" disabled>owner</button>
+            <strong>Type</strong>: <span class="pet-type">Golden Retriever</span><br/>
+            <button class="btn btn-default btn-adopt" type="button" data-id="0">Buy</button>
           </div>
         </div>
       </div>
@@ -87,8 +57,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
-    <script src="js/donation.js"></script>
-    <script src="js/app.js"></script>
-
+    <script src="js/market.js"></script>
   </body>
 </html>
